@@ -19,7 +19,7 @@ export const BankChart = (props: BankChartProps) => {
         <LineChart width={730} height={250} data={data}>
             <Line type="monotone" dataKey="balance" stroke="#8884d8"/>
             <XAxis dataKey="date"/>
-            <YAxis/>
+            <YAxis />
             <Tooltip/>
         </LineChart>
 

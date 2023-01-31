@@ -1,23 +1,23 @@
 import Head from 'next/head'
-import {Inter} from '@next/font/google'
-import {Line, LineChart, Tooltip, XAxis, YAxis} from 'recharts';
-import {bankBalances} from "@/data";
-import {BankChart} from "@/components/BankChart";
+import {bankBalances, legalEntities} from "@/data";
+import React from "react";
+import dynamic from 'next/dynamic'
 
+const LegalEntityChart = dynamic(() =>
+    import('@/components/LegalEntityChart').then((mod) => mod.LegalEntityChart), {ssr: false}
+)
+const BankChart = dynamic(() =>
+    import('@/components/BankChart').then((mod) => mod.BankChart), {ssr: false}
+)
 
-const inter = Inter({subsets: ['latin']})
 
 export default function Home() {
-
-    const sortedKeys = Object.keys(bankBalances).sort()
-    const data = bankBalances.bankOfAmerica.nonTaxGenOpsx9068.sort((a, b) => {
-        return new Date(b[0]).getDate() - new Date(a[0]).getDate()
-    }).map((item) => {
-        return {
-            date: item[0],
-            balance: item[1]
+    const legalEntityTypes: string[] = []
+    for (const entity of legalEntities) {
+        if (!legalEntityTypes.includes(entity.type)) {
+            legalEntityTypes.push(entity.type)
         }
-    })
+    }
     return (
         <>
             <Head>
@@ -26,13 +26,22 @@ export default function Home() {
                 <meta name="viewport" content="width=device-width, initial-scale=1"/>
                 <link rel="icon" href="/favicon.ico"/>
             </Head>
-            <div>
+            <div style={{overflow: "hidden"}}>
                 <div>
                     {
+
                         Object.entries(bankBalances).map(([bankName, account]) => {
-                            return Object.entries(account).map(([accountName, accountData]) => {
-                                return <BankChart bankName={bankName} accountName={accountName} accountData={accountData} key={`${bankName}-${accountName}}`}/>
+                            return Object.entries(account).map(([accountName, accountData], index) => {
+                                return <BankChart bankName={bankName} accountName={accountName}
+                                                  accountData={accountData} key={index}/>
                             })
+                        })
+                    }
+                </div>
+                <div>
+                    {
+                        legalEntityTypes.map((type, i) => {
+                            return <LegalEntityChart legalEntities={legalEntities} type={type} key={i}/>
                         })
                     }
                 </div>
