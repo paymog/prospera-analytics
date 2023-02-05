@@ -12,12 +12,6 @@ const BankChart = dynamic(() =>
 
 
 export default function Home() {
-    const legalEntityTypes: string[] = []
-    for (const entity of legalEntities) {
-        if (!legalEntityTypes.includes(entity.type)) {
-            legalEntityTypes.push(entity.type)
-        }
-    }
     return (
         <>
             <Head>
@@ -28,16 +22,7 @@ export default function Home() {
             </Head>
             <div style={{overflow: "hidden"}}>
                 <div>
-                    return <BankChart bankData={bankBalances}/>
-                    {/*{*/}
-
-                    {/*    Object.entries(bankBalances).map(([bankName, account]) => {*/}
-                    {/*        return Object.entries(account).map(([accountName, accountData], index) => {*/}
-                    {/*            return <BankChart bankName={bankName} accountName={accountName}*/}
-                    {/*                              accountData={accountData} key={index}/>*/}
-                    {/*        })*/}
-                    {/*    })*/}
-                    {/*}*/}
+                    <BankChart bankData={bankBalances}/>
                 </div>
                 <div>
                     <LegalEntityChart legalEntities={legalEntities} />

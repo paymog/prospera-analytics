@@ -1,9 +1,11 @@
-import {Legend, Line, LineChart, Tooltip, XAxis, YAxis} from "recharts"
+import {useState} from "react";
+import {LineChart } from './LineChart'
 
 type BankChartProps = {
     bankData: Record<string, Record<string, (string | number)[][]>>
 }
 
+// taken from https://stackoverflow.com/a/16348977/1489726
 function stringToColour(str: string)  {
     let hash = 0;
     for (let i = 0; i < str.length; i++) {
@@ -36,6 +38,7 @@ export const BankChart = (props: BankChartProps) => {
     // turn the data into kv pairs since there may be multiple values for a given date
     const collapsedBalances = collapseDailyBalanceChanges(props.bankData)
 
+
     const knownDates: string[] = []
     for (const bank of Object.keys(collapsedBalances)) {
         for (const account of Object.keys(collapsedBalances[bank])) {
@@ -48,17 +51,17 @@ export const BankChart = (props: BankChartProps) => {
     }
 
     const sortedDates = knownDates.sort((a, b) => {
-        return new Date(b).getDate() - new Date(a).getDate()
+        return new Date(a).getTime() - new Date(b).getTime()
     })
     const data = []
-    const keys: Record<string, string> = {}
+    const calculatedKeys: Record<string, {color: string, hidden: boolean}> = {}
     for (const date of sortedDates) {
         const datum: Record<string, string | number> = {date}
         for (const bank of Object.keys(collapsedBalances)) {
             for (const account of Object.keys(collapsedBalances[bank])) {
                 const key = `${bank} - ${account}`
-                if (!keys[key]) {
-                    keys[key] = stringToColour(key)
+                if (!calculatedKeys[key]) {
+                    calculatedKeys[key] = {color: stringToColour(key), hidden: false}
                 }
                 datum[key] = collapsedBalances[bank][account][date]
             }
@@ -69,19 +72,6 @@ export const BankChart = (props: BankChartProps) => {
 
     return (<div>
         <h1>Bank Balances</h1>
-        <LineChart width={730} height={250} data={data}>
-            {
-                Object.entries(keys).map(([key,color] ) => {
-                    return <Line type="monotone" dataKey={key} stroke={color} key={key} hide={false}/>
-                })
-            }
-            <XAxis dataKey="date"/>
-            <YAxis/>
-            <Tooltip/>
-            <Legend onClick={() => {
-            }
-            }/>
-        </LineChart>
-
+        <LineChart data={data} initialKeys={calculatedKeys} />
     </div>)
 }
