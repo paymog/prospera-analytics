@@ -8,36 +8,14 @@ import {
   XAxis,
   YAxis,
 } from "recharts";
-import groupBy from "lodash-es/groupBy";
 
-const renderLegend = (props) => {
-  const { payload, onClick } = props;
-
-  const grouped = groupBy(payload, "value");
-
-  console.log(props);
-  return (
-    <ul onClick={onClick} className="grid grid-cols-4 gap-3">
-      {payload.map((entry, index) => (
-        <li
-          onClick={() => onClick(entry)}
-          key={`item-${index}`}
-          className=" text-xs font-bold"
-          style={{ color: entry.color }}
-        >
-          {entry.value}
-        </li>
-      ))}
-    </ul>
-  );
-};
-
+type ChartKeys = Record<string, { color: string; hidden: boolean }>;
 export const LineChart = ({
   data,
   initialKeys,
 }: {
-  data: Record<string, any>[];
-  initialKeys: Record<string, { color: string; hidden: boolean }>;
+  data: Record<string, any>[]
+    initialKeys : ChartKeys
 }) => {
   const [keys, setKeys] = useState(initialKeys);
 
@@ -67,7 +45,7 @@ export const LineChart = ({
             const someKeysHidden = Object.values(keys).some(
               (k) => k.hidden === true
             );
-            const newKeys = {};
+            const newKeys: ChartKeys  = {};
             if (!clickedKey.hidden && someKeysHidden) {
               Object.keys(keys).forEach((k) => {
                 newKeys[k] = {
