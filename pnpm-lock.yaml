@@ -9,7 +9,6 @@ specifiers:
   autoprefixer: ^10.4.13
   eslint: 8.33.0
   eslint-config-next: 13.1.6
-  lodash-es: ^4.17.21
   next: 13.1.6
   postcss: ^8.4.21
   prop-types: 15.6.0
@@ -26,7 +25,6 @@ dependencies:
   '@types/react-dom': 18.0.10
   eslint: 8.33.0
   eslint-config-next: 13.1.6_4vsywjlpuriuw3tl5oq6zy5a64
-  lodash-es: 4.17.21
   next: 13.1.6_biqbaboplfbrettd7655fr4n2y
   prop-types: 15.6.0
   react: 18.2.0
@@ -1841,10 +1839,6 @@ packages:
     engines: {node: '>=10'}
     dependencies:
       p-locate: 5.0.0
-    dev: false
-
-  /lodash-es/4.17.21:
-    resolution: {integrity: sha512-mKnC+QJ9pWVzv+C4/U3rRsHapFfHvQFoFB92e52xeyGMcX6/OlIl78je1u8vePzYZSkkogMPJ2yjxxsb89cxyw==}
     dev: false
 
   /lodash.merge/4.6.2:
