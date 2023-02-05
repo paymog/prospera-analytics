@@ -39,11 +39,7 @@ export default function Home() {
                     }
                 </div>
                 <div>
-                    {
-                        legalEntityTypes.map((type, i) => {
-                            return <LegalEntityChart legalEntities={legalEntities} type={type} key={i}/>
-                        })
-                    }
+                    <LegalEntityChart legalEntities={legalEntities} />
                 </div>
             </div>
         </>
