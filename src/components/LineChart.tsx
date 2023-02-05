@@ -11,7 +11,7 @@ export const LineChart = ({
         <RechartLineChart width={730} height={250} data={data}>
             {
                 Object.entries(keys).map(([key, entry]) => {
-                    return <Line type="monotone" dataKey={key} stroke={entry.color} key={key} hide={entry.hidden}/>
+                    return <Line type="monotone" dataKey={key} stroke={entry.color} connectNulls key={key} hide={entry.hidden}/>
                 })
             }
             <XAxis dataKey="date"/>

@@ -1,5 +1,6 @@
-import {Line, LineChart, Tooltip, XAxis, YAxis } from "recharts"
 import {legalEntities} from "@/data";
+import {stringToColour} from "@/lib/stringToColor";
+import {LineChart} from "@/components/LineChart";
 
 type LegalEntityChartProps = {
     legalEntities: {date:string, type:string}[]
@@ -8,10 +9,10 @@ export const LegalEntityChart = (props: LegalEntityChartProps) => {
     // const filteredData = props.legalEntities.filter((item) => {
     //     return item.type === props.type
     // })
-    const legalEntityTypes: string[] = []
+    const keys: Record<string, {color: string, hidden: boolean}> = {}
     for (const entity of legalEntities) {
-        if (!legalEntityTypes.includes(entity.type)) {
-            legalEntityTypes.push(entity.type)
+        if (!keys[entity.type]) {
+            keys[entity.type] = {color: stringToColour(entity.type), hidden: false}
         }
     }
 
@@ -43,15 +44,7 @@ export const LegalEntityChart = (props: LegalEntityChartProps) => {
 
     return (<div>
         <h1>Legal Entities</h1>
-        <LineChart width={730} height={250} data={data}>
-            {legalEntityTypes.map((type, i) => {
-                return <Line type="monotone" dataKey={type} stroke="#8884d8" key={i}/>
-            })}
-
-            <XAxis dataKey="date"/>
-            <YAxis/>
-            <Tooltip/>
-        </LineChart>
+        <LineChart data={data} initialKeys={keys}/>
 
     </div>)
 }
