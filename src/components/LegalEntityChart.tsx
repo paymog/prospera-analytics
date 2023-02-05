@@ -35,10 +35,6 @@ export const LegalEntityChart = (props: LegalEntityChartProps) => {
             datum[type] = accumulator[type]
         }
         data.push(datum)
-        data.push({
-            date,
-            count: accumulator
-        })
     }
 
     if (data.length <= 3) {

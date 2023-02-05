@@ -28,15 +28,16 @@ export default function Home() {
             </Head>
             <div style={{overflow: "hidden"}}>
                 <div>
-                    {
+                    return <BankChart bankData={bankBalances}/>
+                    {/*{*/}
 
-                        Object.entries(bankBalances).map(([bankName, account]) => {
-                            return Object.entries(account).map(([accountName, accountData], index) => {
-                                return <BankChart bankName={bankName} accountName={accountName}
-                                                  accountData={accountData} key={index}/>
-                            })
-                        })
-                    }
+                    {/*    Object.entries(bankBalances).map(([bankName, account]) => {*/}
+                    {/*        return Object.entries(account).map(([accountName, accountData], index) => {*/}
+                    {/*            return <BankChart bankName={bankName} accountName={accountName}*/}
+                    {/*                              accountData={accountData} key={index}/>*/}
+                    {/*        })*/}
+                    {/*    })*/}
+                    {/*}*/}
                 </div>
                 <div>
                     <LegalEntityChart legalEntities={legalEntities} />
